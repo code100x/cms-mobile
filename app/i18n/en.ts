@@ -6,11 +6,15 @@ const en = {
     cancel: "Cancel",
     back: "Back",
   },
-  welcomeScreen: {
-    postscript:
-      "psst  — This probably isn't what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
-    readyForLaunch: "Your app, almost ready for launch!",
-    exciting: "(ohh, this is exciting!)",
+  tabNavigator: {
+    account: "Account",
+    bookmarks: "Bookmarks",
+    downloads: "Downloads",
+    explore: "Explore",
+    history: "History",
+    home: "Home",
+    myCourses: "My Courses",
+    profile: "Profile",
   },
   errorScreen: {
     title: "Something went wrong!",
@@ -25,6 +29,15 @@ const en = {
       button: "Let's try this again",
     },
   },
+  demoShowroomScreen: {
+    jumpStart: "Components to jump start your project!",
+    lorem2Sentences:
+      "Nulla cupidatat deserunt amet quis aliquip nostrud do adipisicing. Adipisicing excepteur elit laborum Lorem adipisicing do duis.",
+    demoHeaderTxExample: "Yay",
+    demoViaTxProp: "Via `tx` Prop",
+    demoViaSpecifiedTxProp: "Via `{{prop}}Tx` Prop",
+  },
+  ...demoEn,
 }
 
 export default en

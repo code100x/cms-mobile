@@ -173,19 +173,20 @@ export function Button(props: ButtonProps) {
 }
 
 const $baseViewStyle: ViewStyle = {
-  minHeight: 56,
-  borderRadius: 4,
+  minHeight: 40,
+  borderRadius: 8,
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "row",
-  paddingVertical: spacing.sm,
-  paddingHorizontal: spacing.sm,
+  paddingVertical: spacing.xs,
+  paddingHorizontal: spacing.xs,
   overflow: "hidden",
 }
 
 const $baseTextStyle: TextStyle = {
+  color: colors.white,
   fontSize: 16,
-  lineHeight: 20,
+  lineHeight: 24,
   fontFamily: typography.primary.medium,
   textAlign: "center",
   flexShrink: 1,
@@ -200,9 +201,7 @@ const $viewPresets = {
   default: [
     $baseViewStyle,
     {
-      borderWidth: 1,
-      borderColor: colors.palette.neutral400,
-      backgroundColor: colors.palette.neutral100,
+      backgroundColor: colors.background.brand,
     },
   ] as StyleProp<ViewStyle>,
 
@@ -221,9 +220,9 @@ const $textPresets: Record<Presets, StyleProp<TextStyle>> = {
 }
 
 const $pressedViewPresets: Record<Presets, StyleProp<ViewStyle>> = {
-  default: { backgroundColor: colors.palette.neutral200 },
-  filled: { backgroundColor: colors.palette.neutral400 },
-  reversed: { backgroundColor: colors.palette.neutral700 },
+  default: { opacity: 0.9 },
+  filled: { opacity: 0.9 },
+  reversed: { opacity: 0.9 },
 }
 
 const $pressedTextPresets: Record<Presets, StyleProp<TextStyle>> = {

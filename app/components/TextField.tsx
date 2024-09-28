@@ -9,7 +9,7 @@ import {
   ViewStyle,
 } from "react-native"
 import { isRTL, translate } from "../i18n"
-import { colors, spacing, typography } from "../theme"
+import { colors, spacing } from "../theme"
 import { Text, TextProps } from "./Text"
 
 export interface TextFieldAccessoryProps {
@@ -147,7 +147,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 
   const $inputStyles: StyleProp<TextStyle> = [
     $inputStyle,
-    disabled && { color: colors.textDim },
+    disabled && { color: colors.content.secondary },
     isRTL && { textAlign: "right" as TextStyle["textAlign"] },
     TextInputProps.multiline && { height: "auto" },
     $inputStyleOverride,
@@ -203,7 +203,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
           underlineColorAndroid={colors.transparent}
           textAlignVertical="top"
           placeholder={placeholderContent}
-          placeholderTextColor={colors.textDim}
+          placeholderTextColor={colors.content.secondary}
           {...TextInputProps}
           editable={!disabled}
           style={$inputStyles}
@@ -241,17 +241,15 @@ const $inputWrapperStyle: ViewStyle = {
   flexDirection: "row",
   alignItems: "flex-start",
   borderWidth: 1,
-  borderRadius: 4,
-  backgroundColor: colors.palette.neutral200,
-  borderColor: colors.palette.neutral400,
+  borderRadius: 8,
+  borderColor: colors.border.default,
   overflow: "hidden",
 }
 
 const $inputStyle: TextStyle = {
   flex: 1,
   alignSelf: "stretch",
-  fontFamily: typography.primary.normal,
-  color: colors.text,
+  color: colors.content.primary,
   fontSize: 16,
   height: 24,
   // https://github.com/facebook/react-native/issues/21720#issuecomment-532642093

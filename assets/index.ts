@@ -1,0 +1,5 @@
+export { default as BookmarkIcon } from "./icons/bookmark.svg"
+export { default as DownloadIcon } from "./icons/download.svg"
+export { default as HistoryIcon } from "./icons/history.svg"
+export { default as PlayIcon } from "./icons/play.svg"
+export { default as ProfileIcon } from "./icons/profile.svg"

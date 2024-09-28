@@ -1,3 +1,10 @@
-export * from "./WelcomeScreen"
 export * from "./ErrorScreen/ErrorBoundary"
 // export other screens here
+export * from "./LoginScreen"
+export * from "./BookmarksScreen"
+export * from "./HistoryScreen"
+export * from "./DownloadsScreen"
+export * from "./AccountScreen"
+export * from "./MyCoursesScreen"
+export * from "./Storybook/StorybookScreen"
+export * from "./VideoPlayerScreen"

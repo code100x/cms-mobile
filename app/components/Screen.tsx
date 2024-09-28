@@ -37,7 +37,7 @@ interface BaseScreenProps {
    */
   backgroundColor?: string
   /**
-   * Status bar setting. Defaults to dark.
+   * Status bar setting. Defaults to light.
    */
   statusBarStyle?: "light" | "dark"
   /**
@@ -227,12 +227,12 @@ function ScreenWithScrolling(props: ScreenProps) {
  */
 export function Screen(props: ScreenProps) {
   const {
-    backgroundColor = colors.background,
+    backgroundColor = colors.background.primary,
     KeyboardAvoidingViewProps,
     keyboardOffset = 0,
     safeAreaEdges,
     StatusBarProps,
-    statusBarStyle = "dark",
+    statusBarStyle = "light",
   } = props
 
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)

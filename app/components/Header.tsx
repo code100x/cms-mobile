@@ -145,7 +145,7 @@ interface HeaderActionProps {
  */
 export function Header(props: HeaderProps) {
   const {
-    backgroundColor = colors.background,
+    backgroundColor = colors.background.primary,
     LeftActionComponent,
     leftIcon,
     leftIconColor,
@@ -287,7 +287,9 @@ const $actionTextContainer: ViewStyle = {
 }
 
 const $actionText: TextStyle = {
-  color: colors.tint,
+  color: colors.content.secondary,
+  fontSize: 16,
+  lineHeight: 24,
 }
 
 const $actionIconContainer: ViewStyle = {
@@ -295,7 +297,6 @@ const $actionIconContainer: ViewStyle = {
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
-  paddingHorizontal: spacing.md,
   zIndex: 2,
 }
 

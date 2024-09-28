@@ -1,22 +1,8 @@
-/**
- * This Api class lets you define an API endpoint and methods to request
- * data and process it.
- *
- * See the [Backend API Integration](https://docs.infinite.red/ignite-cli/boilerplate/app/services/#backend-api-integration)
- * documentation for more details.
- */
-import {
-  ApisauceInstance,
-  create,
-} from "apisauce"
+import { ApiResponse, ApisauceInstance, create } from "apisauce"
 import Config from "../../config"
-import type {
-  ApiConfig,
-} from "./api.types"
+import type { ApiConfig } from "./api.types"
 
-/**
- * Configuring the apisauce instance.
- */
+/** Configuring the apisauce instance. */
 export const DEFAULT_API_CONFIG: ApiConfig = {
   url: Config.API_URL,
   timeout: 10000,
@@ -30,9 +16,7 @@ export class Api {
   apisauce: ApisauceInstance
   config: ApiConfig
 
-  /**
-   * Set up our API instance. Keep this lightweight!
-   */
+  /** Set up our API instance. Keep this lightweight! */
   constructor(config: ApiConfig = DEFAULT_API_CONFIG) {
     this.config = config
     this.apisauce = create({
@@ -44,6 +28,17 @@ export class Api {
     })
   }
 
+  /** A generic method to make POST requests. */
+  async post<ResponseType>(endpoint: string, payload: any): Promise<ApiResponse<ResponseType>> {
+    return this.apisauce.post<ResponseType>(endpoint, payload)
+  }
+
+  /** A generic method to make GET requests. */
+  async get<ResponseType>(endpoint: string, params?: any): Promise<ApiResponse<ResponseType>> {
+    return this.apisauce.get<ResponseType>(endpoint, params)
+  }
+
+  // You can add more methods like PUT, DELETE, etc. in a similar manner if needed.
 }
 
 // Singleton instance of the API for convenience

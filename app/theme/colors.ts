@@ -112,12 +112,8 @@ export const colors = {
   palette,
   /** A helper for making something see-thru. */
   transparent: "rgba(0, 0, 0, 0)",
-  /** The default text color in many components. */
-  text: palette.neutral800,
   /** Secondary text information. */
   textDim: palette.neutral600,
-  /** The default color of the screen background. */
-  background: palette.neutral200,
   /** The main tinting color. */
   tint: palette.primary500,
   /** A subtle color used for lines. */
@@ -126,10 +122,35 @@ export const colors = {
   error: palette.angry500,
   /** Error Background. */
   errorBackground: palette.angry100,
+  white: palette.neutral100,
 
   /** -------- 100xDevs ----------- */
-  primary: palette.slate950,
-  secondary: palette.slate900,
-  border: palette.slate800,
-  brand: palette.blue400,
+  background: {
+    primary: palette.slate950,
+    brand: palette.blue500,
+    secondary: palette.slate900,
+    positive: palette.green400,
+  },
+  content: {
+    primary: palette.slate50,
+    secondary: palette.slate400,
+    brand: palette.blue400,
+    white: palette.neutral100,
+  },
+  border: {
+    default: palette.slate800,
+  },
+
+  dark: {
+    border: palette.slate800,
+    brand: palette.blue400,
+    primary: palette.slate950,
+    secondary: palette.slate900,
+  },
+  light: {
+    border: palette.slate800,
+    brand: palette.blue400,
+    primary: palette.slate950,
+    secondary: palette.slate900,
+  },
 }

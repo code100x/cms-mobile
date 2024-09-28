@@ -29,6 +29,7 @@ import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
 import * as storage from "./utils/storage"
 import { customFontsToLoad } from "./theme"
 import Config from "./config"
+import { ThemeProvider } from "./contexts/ThemeProvider"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -100,13 +101,15 @@ function App(props: AppProps) {
   // otherwise, we're ready to render the app
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <ErrorBoundary catchErrors={Config.catchErrors}>
-        <AppNavigator
-          linking={linking}
-          initialState={initialNavigationState}
-          onStateChange={onNavigationStateChange}
-        />
-      </ErrorBoundary>
+      <ThemeProvider>
+        <ErrorBoundary catchErrors={Config.catchErrors}>
+          <AppNavigator
+            linking={linking}
+            initialState={initialNavigationState}
+            onStateChange={onNavigationStateChange}
+          />
+        </ErrorBoundary>
+      </ThemeProvider>
     </SafeAreaProvider>
   )
 }
