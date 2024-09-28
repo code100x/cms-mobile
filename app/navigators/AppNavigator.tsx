@@ -1,0 +1,91 @@
+/**
+ * The app navigator (formerly "AppNavigator" and "MainNavigator") is used for the primary
+ * navigation flows of your app.
+ * Generally speaking, it will contain an auth flow (registration, login, forgot password)
+ * and a "main" flow which the user will use once logged in.
+ */
+import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native"
+import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
+import { observer } from "mobx-react-lite"
+import React from "react"
+import { useColorScheme } from "react-native"
+import * as Screens from "app/screens"
+import Config from "../config"
+import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
+import { colors } from "app/theme"
+import { RouteName } from "app/constants"
+
+/**
+ * This type allows TypeScript to know what routes are defined in this navigator
+ * as well as what properties (if any) they might take when navigating to them.
+ *
+ * If no params are allowed, pass through `undefined`. Generally speaking, we
+ * recommend using your MobX-State-Tree store(s) to keep application state
+ * rather than passing state through navigation params.
+ *
+ * For more information, see this documentation:
+ *   https://reactnavigation.org/docs/params/
+ *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
+ *   https://reactnavigation.org/docs/typescript/#organizing-types
+ */
+export type AppStackParamList = {
+  Account: undefined
+  Bookmarks: undefined
+  Downloads: undefined
+  History: undefined
+  Login: undefined
+  MyCourses: undefined
+  Storybook: undefined
+  VideoPlayer: undefined
+}
+
+/**
+ * This is a list of all the route names that will exit the app if the back button
+ * is pressed while in that screen. Only affects Android.
+ */
+const exitRoutes = Config.exitRoutes
+
+export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStackScreenProps<
+  AppStackParamList,
+  T
+>
+
+// Documentation: https://reactnavigation.org/docs/stack-navigator/
+const Stack = createNativeStackNavigator<AppStackParamList>()
+
+const AppStack = observer(function AppStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName={RouteName.MyCourses}
+      screenOptions={{ headerShown: false, navigationBarColor: colors.background.primary }}
+    >
+      <Stack.Screen name={RouteName.Account} component={Screens.AccountScreen} />
+      <Stack.Screen name={RouteName.Bookmarks} component={Screens.BookmarksScreen} />
+      <Stack.Screen name={RouteName.Downloads} component={Screens.DownloadsScreen} />
+      <Stack.Screen name={RouteName.History} component={Screens.HistoryScreen} />
+      <Stack.Screen name={RouteName.Login} component={Screens.LoginScreen} />
+      <Stack.Screen name={RouteName.MyCourses} component={Screens.MyCoursesScreen} />
+      <Stack.Screen name={RouteName.Storybook} component={Screens.StorybookScreen} />
+      <Stack.Screen name={RouteName.VideoPlayer} component={Screens.VideoPlayerScreen} />
+    </Stack.Navigator>
+  )
+})
+
+export interface NavigationProps
+  extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
+
+export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
+  const colorScheme = useColorScheme()
+
+  useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
+
+  return (
+    <NavigationContainer
+      ref={navigationRef}
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      {...props}
+    >
+      <AppStack />
+    </NavigationContainer>
+  )
+})
