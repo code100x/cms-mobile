@@ -1,50 +1,63 @@
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { TextStyle, View, ViewStyle } from "react-native"
-import { AppStackScreenProps } from "app/navigators"
-import { ContentCard, CourseCard, Screen, Text, TextField } from "app/components"
+
+import { CourseCard, ListView, Screen, Text, TextField } from "app/components"
 import { spacing, typography } from "app/theme"
-import { ContentType } from "app/constants"
+import { TabScreenProps } from "app/navigators"
 
-// import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "app/models"
+interface MyCoursesScreenProps extends TabScreenProps<"MyCourses"> {}
 
-interface MyCoursesScreenProps extends AppStackScreenProps<"MyCourses"> {}
+const renderCourses = () => {
+  return <CourseCard />
+}
+
+const renderSeparator = () => {
+  return <View style={$separator} />
+}
 
 export const MyCoursesScreen: FC<MyCoursesScreenProps> = observer(function MyCoursesScreen() {
-  // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
-
-  // Pull in navigation via hook
-  // const navigation = useNavigation()
+  // const { userStore } = useStores()
   const username = undefined
+
   return (
-    <Screen style={$root} preset="scroll" safeAreaEdges={["top"]}>
+    <Screen contentContainerStyle={$root} safeAreaEdges={["top"]}>
       <View>
         {/* Add user avatar here */}
-        <Text style={$greeting} text={`Hi, ${username ?? "Hustler"}`} />
+        <Text preset="subheading" style={$greeting} text={`Hi, ${username ?? "Hustler"}`} />
       </View>
       <Text preset="heading" style={$heading} text="My Courses" />
       <TextField placeholder="Search videos..." />
-      <CourseCard />
-      <ContentCard type={ContentType.Folder} isCompleted />
-      <ContentCard type={ContentType.Video} />
-      <ContentCard type={ContentType.Notion} />
+      <ListView
+        // keyExtractor={(item) => item.id}
+        contentContainerStyle={$listContainer}
+        data={[{}, {}, {}, {}, {}]}
+        estimatedItemSize={10}
+        ItemSeparatorComponent={renderSeparator}
+        renderItem={renderCourses}
+        showsVerticalScrollIndicator={false}
+      />
     </Screen>
   )
 })
 
 const $root: ViewStyle = {
   flex: 1,
-  padding: spacing.md,
+  paddingHorizontal: spacing.md,
 }
 
 const $greeting: TextStyle = {
-  fontSize: 20,
-  lineHeight: 28,
   fontFamily: typography.primary.bold,
 }
 
 const $heading: TextStyle = {
   marginVertical: spacing.md,
+}
+
+const $listContainer: ViewStyle = {
+  paddingVertical: spacing.md,
+}
+
+const $separator: ViewStyle = {
+  marginVertical: spacing.xs,
 }

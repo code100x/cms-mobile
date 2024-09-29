@@ -1,14 +1,15 @@
-import { TxKeyPath } from "app/i18n"
-
 import {
-  BookmarksScreen,
-  HistoryScreen,
-  AccountScreen,
-  MyCoursesScreen,
-  DownloadsScreen,
-} from "../screens"
+  BookmarkIcon,
+  DownloadIcon,
+  HistoryIcon,
+  LucideIcon,
+  PlayCircleIcon,
+  UserCircleIcon,
+} from "lucide-react-native"
 
-import { PlayIcon } from "../../assets"
+import * as Screens from "app/screens"
+import { TxKeyPath } from "app/i18n"
+import { TabParamList } from "app/navigators"
 
 export enum RouteName {
   Account = "Account",
@@ -21,43 +22,43 @@ export enum RouteName {
   Storybook = "Storybook",
   TabNavigator = "TabNavigator",
   VideoPlayer = "VideoPlayer",
+  Welcome = "Welcome",
 }
 
-// TODO: fix the types
 export const TAB_ROUTES: Array<{
-  name: any
   component: React.FC<any>
+  icon: LucideIcon
+  name: keyof TabParamList
   translationKey: TxKeyPath
-  icon: string
 }> = [
   {
+    component: Screens.MyCoursesScreen,
+    icon: PlayCircleIcon,
     name: RouteName.MyCourses,
-    component: MyCoursesScreen,
     translationKey: "tabNavigator.myCourses",
-    icon: PlayIcon,
   },
   {
+    component: Screens.DownloadsScreen,
+    icon: DownloadIcon,
     name: RouteName.Downloads,
-    component: DownloadsScreen,
     translationKey: "tabNavigator.downloads",
-    icon: PlayIcon,
   },
   {
+    component: Screens.BookmarksScreen,
+    icon: BookmarkIcon,
     name: RouteName.Bookmarks,
-    component: BookmarksScreen,
     translationKey: "tabNavigator.bookmarks",
-    icon: PlayIcon,
   },
   {
+    component: Screens.HistoryScreen,
+    icon: HistoryIcon,
     name: RouteName.History,
-    component: HistoryScreen,
     translationKey: "tabNavigator.history",
-    icon: PlayIcon,
   },
   {
+    component: Screens.AccountScreen,
+    icon: UserCircleIcon,
     name: RouteName.Account,
-    component: AccountScreen,
     translationKey: "tabNavigator.account",
-    icon: PlayIcon,
   },
 ]

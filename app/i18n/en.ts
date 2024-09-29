@@ -10,11 +10,9 @@ const en = {
     account: "Account",
     bookmarks: "Bookmarks",
     downloads: "Downloads",
-    explore: "Explore",
     history: "History",
-    home: "Home",
     myCourses: "My Courses",
-    profile: "Profile",
+    storybook: "Storybook",
   },
   errorScreen: {
     title: "Something went wrong!",

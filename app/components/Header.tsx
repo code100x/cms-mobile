@@ -263,7 +263,7 @@ function HeaderAction(props: HeaderActionProps) {
 }
 
 const $wrapper: ViewStyle = {
-  height: 56,
+  height: 40,
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
