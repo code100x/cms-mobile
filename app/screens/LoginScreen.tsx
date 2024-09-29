@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { TextInput, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
-import { AppStackScreenProps } from "app/navigators"
+import { AuthStackScreenProps, goBack } from "app/navigators"
 import {
   Button,
   Header,
@@ -15,7 +15,7 @@ import { colors, spacing, typography } from "app/theme"
 import { useStores } from "app/models"
 import { HIT_SLOP_5 } from "app/constants"
 
-interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
+interface LoginScreenProps extends AuthStackScreenProps<"Login"> {}
 
 export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen() {
   const { userStore } = useStores()
@@ -106,6 +106,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen()
         backgroundColor={colors.background.primary}
         leftIcon="caretLeft"
         leftIconColor={colors.content.secondary}
+        onLeftPress={goBack}
       />
       <Text text="Login Now" preset="heading" />
       <Text

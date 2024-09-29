@@ -5,10 +5,9 @@ import { ArrowDownIcon } from "lucide-react-native"
 
 import { AppStackScreenProps, goBack } from "app/navigators"
 import { Chapters, Header, Screen, Slides, TabViewWrapper, Text } from "app/components"
-import { colors, spacing, typography } from "app/theme"
+import { $styles, colors, spacing, typography } from "app/theme"
 import { CourseContent } from "app/components/CourseContent"
 import { CHAPTERS_DUMMY_DATA, HIT_SLOP_5 } from "app/constants"
-import { $styles } from "app/theme/styles"
 
 interface VideoPlayerScreenProps extends AppStackScreenProps<"VideoPlayer"> {}
 

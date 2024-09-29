@@ -29,5 +29,6 @@ export type ThemedStyle<T> = (theme: Theme) => T
 
 export * from "./colors"
 export * from "./spacing"
-export * from "./typography"
+export * from "./styles"
 export * from "./timing"
+export * from "./typography"

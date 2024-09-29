@@ -1,6 +1,7 @@
 import { View, ViewStyle, TextStyle } from "react-native"
 import React from "react"
 import { observer } from "mobx-react-lite"
+
 import { colors, spacing } from "app/theme"
 
 import { ListItem } from "./ListItem"
@@ -44,12 +45,13 @@ export const Chapters = React.memo(
 
     return (
       <ListView
+        contentContainerStyle={$contentContainer}
         data={data}
         estimatedItemSize={30}
         ItemSeparatorComponent={renderSeparator}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
-        contentContainerStyle={$contentContainer}
+        showsVerticalScrollIndicator={false}
       />
     )
   }),

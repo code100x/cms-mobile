@@ -1,10 +1,16 @@
 import * as React from "react"
-import { ImageStyle, StyleProp, TextStyle, View, ViewStyle } from "react-native"
+import { ImageStyle, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
+import { Users2Icon } from "lucide-react-native"
+
 import { colors, spacing, typography } from "app/theme"
 import { Text } from "app/components/Text"
+import { RouteName } from "app/constants"
+
 import { AutoImage } from "./AutoImage"
 import { Button } from "./Button"
+import { Progress } from "./Progress"
 
 export interface CourseCardProps {
   /** an optional style override useful for padding & margin. */
@@ -13,7 +19,18 @@ export interface CourseCardProps {
 
 export const CourseCard = observer(function CourseCard(props: CourseCardProps) {
   const { style } = props
+
+  const navigation = useNavigation<any>()
+
   const $styles = [$container, style]
+
+  const handleViewContentPress = () => {
+    navigation.navigate(RouteName.ContentView)
+  }
+
+  const handleJoinDiscordPress = () => {
+    // Linking.openURL("add_discord_link_here")
+  }
 
   return (
     <View style={$styles}>
@@ -26,29 +43,30 @@ export const CourseCard = observer(function CourseCard(props: CourseCardProps) {
       <View style={$subContainer}>
         <View>
           <Text style={$title} text="Cohort 3.0 | Web Dev" />
-          {/* Add progress bar component here */}
+          {/* TODO: Change this to a circular progress */}
+          <Progress progress={50} />
         </View>
-        <Button text="View Content" />
-        <View style={$footer}>
-          {/* add icon here */}
+        <Button onPress={handleViewContentPress} text="View Content" />
+        <TouchableOpacity activeOpacity={0.8} onPress={handleJoinDiscordPress} style={$footer}>
+          <Users2Icon size={16} color={colors.content.secondary} />
           <Text style={$footerText} text="Join Discord Community" />
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   )
 })
 
 const $container: ViewStyle = {
-  borderWidth: 1,
   borderColor: colors.border.default,
   borderRadius: spacing.md,
+  borderWidth: 1,
 }
 
 const $image: ImageStyle = {
-  width: "100%",
-  height: 200,
   borderTopLeftRadius: spacing.md,
   borderTopRightRadius: spacing.md,
+  height: 200,
+  width: "100%",
 }
 
 const $subContainer: ViewStyle = {
@@ -66,7 +84,7 @@ const $title: TextStyle = {
 const $footer: ViewStyle = {
   alignItems: "center",
   flexDirection: "row",
-  gap: spacing.md,
+  gap: spacing.xs,
   justifyContent: "center",
 }
 

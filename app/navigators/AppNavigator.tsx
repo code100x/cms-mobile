@@ -4,7 +4,12 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
-import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native"
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+  NavigatorScreenParams,
+} from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite"
 import React from "react"
@@ -14,6 +19,9 @@ import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
 import { RouteName } from "app/constants"
+import { useStores } from "app/models"
+import AuthNavigator from "./AuthNavigator"
+import { TabNavigator, TabParamList } from "./TabNavigator"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -29,13 +37,9 @@ import { RouteName } from "app/constants"
  *   https://reactnavigation.org/docs/typescript/#organizing-types
  */
 export type AppStackParamList = {
-  Account: undefined
-  Bookmarks: undefined
-  Downloads: undefined
-  History: undefined
-  Login: undefined
-  MyCourses: undefined
+  ContentView: undefined
   Storybook: undefined
+  TabNavigator: NavigatorScreenParams<TabParamList>
   VideoPlayer: undefined
 }
 
@@ -56,15 +60,11 @@ const Stack = createNativeStackNavigator<AppStackParamList>()
 const AppStack = observer(function AppStack() {
   return (
     <Stack.Navigator
-      initialRouteName={RouteName.MyCourses}
+      initialRouteName={RouteName.TabNavigator}
       screenOptions={{ headerShown: false, navigationBarColor: colors.background.primary }}
     >
-      <Stack.Screen name={RouteName.Account} component={Screens.AccountScreen} />
-      <Stack.Screen name={RouteName.Bookmarks} component={Screens.BookmarksScreen} />
-      <Stack.Screen name={RouteName.Downloads} component={Screens.DownloadsScreen} />
-      <Stack.Screen name={RouteName.History} component={Screens.HistoryScreen} />
-      <Stack.Screen name={RouteName.Login} component={Screens.LoginScreen} />
-      <Stack.Screen name={RouteName.MyCourses} component={Screens.MyCoursesScreen} />
+      <Stack.Screen name={RouteName.TabNavigator} component={TabNavigator} />
+      <Stack.Screen name={RouteName.ContentView} component={Screens.ContentViewScreen} />
       <Stack.Screen name={RouteName.Storybook} component={Screens.StorybookScreen} />
       <Stack.Screen name={RouteName.VideoPlayer} component={Screens.VideoPlayerScreen} />
     </Stack.Navigator>
@@ -74,8 +74,11 @@ const AppStack = observer(function AppStack() {
 export interface NavigationProps
   extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
+/** Root Navigator */
 export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
   const colorScheme = useColorScheme()
+  const { userStore } = useStores()
+  const { isAuthenticated } = userStore
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
 
@@ -85,7 +88,7 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
       {...props}
     >
-      <AppStack />
+      {isAuthenticated ? <AppStack /> : <AuthNavigator />}
     </NavigationContainer>
   )
 })
