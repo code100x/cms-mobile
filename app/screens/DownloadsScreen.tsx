@@ -1,25 +1,33 @@
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle } from "react-native"
+import { TextStyle, ViewStyle } from "react-native"
+import { DownloadIcon } from "lucide-react-native"
 
-import { TabScreenProps } from "app/navigators"
-import { Screen, Text } from "app/components"
 import { $styles, spacing } from "app/theme"
-
-// import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "app/models"
+import { EmptyPlaceholder, ListView, Screen, Text } from "app/components"
+import { TabScreenProps } from "app/navigators"
 
 interface DownloadsScreenProps extends TabScreenProps<"Downloads"> {}
 
-export const DownloadsScreen: FC<DownloadsScreenProps> = observer(function DownloadsScreen() {
-  // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
+const renderEmptyPlaceholder = (
+  <EmptyPlaceholder
+    icon={DownloadIcon}
+    subtext="You haven’t downloaded any lectures yet. Download now to watch offline at your convenience."
+    text="No Lecture Downloads"
+  />
+)
 
-  // Pull in navigation via hook
-  // const navigation = useNavigation()
+export const DownloadsScreen: FC<DownloadsScreenProps> = observer(function DownloadsScreen() {
   return (
     <Screen style={$root} contentContainerStyle={$styles.flex1} safeAreaEdges={["top"]}>
-      <Text preset="heading" text="Downloads" />
+      <Text preset="heading" text="Downloads" style={$heading} />
+      <ListView
+        data={[]}
+        estimatedItemSize={50}
+        ListEmptyComponent={renderEmptyPlaceholder}
+        renderItem={() => <></>}
+        showsVerticalScrollIndicator={false}
+      />
     </Screen>
   )
 })
@@ -27,4 +35,8 @@ export const DownloadsScreen: FC<DownloadsScreenProps> = observer(function Downl
 const $root: ViewStyle = {
   flex: 1,
   paddingHorizontal: spacing.md,
+}
+
+const $heading: TextStyle = {
+  marginBottom: spacing.md,
 }

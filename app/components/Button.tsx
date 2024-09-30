@@ -10,7 +10,7 @@ import {
 import { colors, spacing, typography } from "../theme"
 import { Text, TextProps } from "./Text"
 
-type Presets = keyof typeof $viewPresets
+export type ButtonPresets = keyof typeof $viewPresets
 
 export interface ButtonAccessoryProps {
   style: StyleProp<any>
@@ -55,7 +55,7 @@ export interface ButtonProps extends PressableProps {
   /**
    * One of the different types of button presets.
    */
-  preset?: Presets
+  preset?: ButtonPresets
   /**
    * An optional component to render on the right side of the text.
    * Example: `RightAccessory={(props) => <View {...props} />}`
@@ -113,7 +113,7 @@ export function Button(props: ButtonProps) {
     ...rest
   } = props
 
-  const preset: Presets = props.preset ?? "default"
+  const preset: ButtonPresets = props.preset ?? "default"
   /**
    * @param {PressableStateCallbackType} root0 - The root object containing the pressed state.
    * @param {boolean} root0.pressed - The pressed state.
@@ -220,25 +220,33 @@ const $viewPresets = {
     $baseViewStyle,
     { backgroundColor: colors.palette.neutral800 },
   ] as StyleProp<ViewStyle>,
+
+  destructive: [
+    $baseViewStyle,
+    { backgroundColor: colors.content.negative },
+  ] as StyleProp<ViewStyle>,
 }
 
-const $textPresets: Record<Presets, StyleProp<TextStyle>> = {
+const $textPresets: Record<ButtonPresets, StyleProp<TextStyle>> = {
   default: $baseTextStyle,
   filled: $baseTextStyle,
   outline: [$baseTextStyle, { color: colors.content.secondary }],
   reversed: [$baseTextStyle, { color: colors.palette.neutral100 }],
+  destructive: [$baseTextStyle, { color: colors.content.white }],
 }
 
-const $pressedViewPresets: Record<Presets, StyleProp<ViewStyle>> = {
+const $pressedViewPresets: Record<ButtonPresets, StyleProp<ViewStyle>> = {
   default: { opacity: 0.9 },
   filled: { opacity: 0.9 },
   outline: { opacity: 0.9 },
   reversed: { opacity: 0.9 },
+  destructive: { opacity: 0.9 },
 }
 
-const $pressedTextPresets: Record<Presets, StyleProp<TextStyle>> = {
+const $pressedTextPresets: Record<ButtonPresets, StyleProp<TextStyle>> = {
   default: { opacity: 0.9 },
   filled: { opacity: 0.9 },
   outline: { opacity: 0.9 },
   reversed: { opacity: 0.9 },
+  destructive: { opacity: 0.9 },
 }

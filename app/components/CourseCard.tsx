@@ -6,7 +6,7 @@ import { Users2Icon } from "lucide-react-native"
 
 import { colors, spacing, typography } from "app/theme"
 import { Text } from "app/components/Text"
-import { RouteName } from "app/constants"
+import { ContentType, RouteName } from "app/constants"
 
 import { AutoImage } from "./AutoImage"
 import { Button } from "./Button"
@@ -25,7 +25,7 @@ export const CourseCard = observer(function CourseCard(props: CourseCardProps) {
   const $styles = [$container, style]
 
   const handleViewContentPress = () => {
-    navigation.navigate(RouteName.ContentView)
+    navigation.navigate(RouteName.ContentView, { type: ContentType.Folder })
   }
 
   const handleJoinDiscordPress = () => {

@@ -48,3 +48,11 @@ export const CHAPTERS_DUMMY_DATA = [
   { title: "Cancellation with async/await", timeStamp: "45:00", start: 420, end: 450 },
   { title: "Using async/await with React", timeStamp: "48:00", start: 450, end: 480 },
 ]
+
+export const SECTIONS_DATA = [
+  { title: "Today", data: [{}, {}] },
+  { title: "Yesterday", data: [{}, {}, {}] },
+  { title: "26 Sep", data: [{}, {}] },
+  { title: "23 Sep", data: [{}] },
+  { title: "22 Sep", data: [{}] },
+]

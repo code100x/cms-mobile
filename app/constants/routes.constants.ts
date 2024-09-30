@@ -22,6 +22,7 @@ export enum RouteName {
   Storybook = "Storybook",
   TabNavigator = "TabNavigator",
   VideoPlayer = "VideoPlayer",
+  Webview = "Webview",
   Welcome = "Welcome",
 }
 

@@ -132,9 +132,10 @@ export const colors = {
     positive: palette.green400,
   },
   content: {
+    brand: palette.blue400,
+    negative: palette.red400,
     primary: palette.slate50,
     secondary: palette.slate400,
-    brand: palette.blue400,
     white: palette.neutral100,
   },
   border: {

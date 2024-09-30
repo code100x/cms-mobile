@@ -18,7 +18,7 @@ import * as Screens from "app/screens"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
-import { RouteName } from "app/constants"
+import { ContentType, RouteName } from "app/constants"
 import { useStores } from "app/models"
 import AuthNavigator from "./AuthNavigator"
 import { TabNavigator, TabParamList } from "./TabNavigator"
@@ -37,10 +37,11 @@ import { TabNavigator, TabParamList } from "./TabNavigator"
  *   https://reactnavigation.org/docs/typescript/#organizing-types
  */
 export type AppStackParamList = {
-  ContentView: undefined
+  ContentView: { type?: ContentType }
   Storybook: undefined
   TabNavigator: NavigatorScreenParams<TabParamList>
   VideoPlayer: undefined
+  Webview: { url: string }
 }
 
 /**
@@ -67,6 +68,7 @@ const AppStack = observer(function AppStack() {
       <Stack.Screen name={RouteName.ContentView} component={Screens.ContentViewScreen} />
       <Stack.Screen name={RouteName.Storybook} component={Screens.StorybookScreen} />
       <Stack.Screen name={RouteName.VideoPlayer} component={Screens.VideoPlayerScreen} />
+      <Stack.Screen name={RouteName.Webview} component={Screens.WebviewScreen} />
     </Stack.Navigator>
   )
 })

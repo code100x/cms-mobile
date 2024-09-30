@@ -1,16 +1,25 @@
 import * as React from "react"
 import { StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
-import { CheckIcon, FileTextIcon, FolderIcon, PlayCircleIcon } from "lucide-react-native"
+import {
+  CheckIcon,
+  FileTextIcon,
+  FolderIcon,
+  PlayCircleIcon,
+  Trash2Icon,
+} from "lucide-react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 
-import { ContentType, RouteName } from "app/constants"
+import { ContentType, HIT_SLOP_10, RouteName } from "app/constants"
 import { colors, spacing } from "app/theme"
 import { Text } from "app/components/Text"
+import { closeBottomSheet, openBottomSheet } from "app/utils"
 
 export interface ContentCardProps {
   /** an optional prop to mark the content as completed. */
   isCompleted?: boolean
+  /** an optional prop to show the delete icon. */
+  showDeleteIcon?: boolean
   /** an optional style override useful for padding & margin. */
   style?: StyleProp<ViewStyle>
   /** a required prop to specify the content type. */
@@ -37,7 +46,7 @@ const renderContentIcon = (type: ContentType) => {
 }
 
 export const ContentCard = observer(function ContentCard(props: ContentCardProps) {
-  const { isCompleted = false, style, type } = props
+  const { isCompleted = false, showDeleteIcon = false, style, type } = props
 
   // TODO: Fix this type inference
   const navigation = useNavigation<any>()
@@ -45,7 +54,30 @@ export const ContentCard = observer(function ContentCard(props: ContentCardProps
   const $styles = [$container, style]
 
   const handleCardPress = () => {
-    navigation.navigate(RouteName.VideoPlayer)
+    // TODO: Remove this post API integration
+    console.log({ type })
+
+    if (type === ContentType.Video) {
+      navigation.navigate(RouteName.VideoPlayer)
+    } else if (type === ContentType.Folder) {
+      // TODO: the type here will be coming from the content's data
+      // navigation.push(RouteName.ContentView, { type })
+      navigation.push(RouteName.ContentView, { type: ContentType.Video })
+    }
+  }
+
+  const handleDeletePress = () => {
+    openBottomSheet({
+      confirmButtonText: "Delete",
+      icon: Trash2Icon,
+      onCancel: closeBottomSheet,
+      onConfirm: () => {
+        // TODO: API/Logic to delete the content
+        closeBottomSheet()
+      },
+      subtitle: "Are you sure? This action can't be undone.",
+      title: "Confirm Deletion",
+    })
   }
 
   return (
@@ -57,7 +89,14 @@ export const ContentCard = observer(function ContentCard(props: ContentCardProps
           <Text style={$subtitle} text="Last Updated : 10 Aug 24" />
         </View>
       </View>
-      {isCompleted && <CheckIcon color={colors.content.white} size={20} style={$checkIcon} />}
+      {showDeleteIcon && (
+        <TouchableOpacity activeOpacity={0.8} hitSlop={HIT_SLOP_10} onPress={handleDeletePress}>
+          <Trash2Icon color={colors.content.negative} size={16} />
+        </TouchableOpacity>
+      )}
+      {!showDeleteIcon && isCompleted && (
+        <CheckIcon color={colors.content.white} size={20} style={$checkIcon} />
+      )}
     </TouchableOpacity>
   )
 })

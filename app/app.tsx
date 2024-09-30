@@ -30,6 +30,8 @@ import * as storage from "./utils/storage"
 import { customFontsToLoad } from "./theme"
 import Config from "./config"
 import { ThemeProvider } from "./contexts/ThemeProvider"
+import "app/components/Sheets" // This registers the react-native-actions-sheet sheets
+import { SheetProvider } from "react-native-actions-sheet"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -101,15 +103,17 @@ function App(props: AppProps) {
   // otherwise, we're ready to render the app
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <ThemeProvider>
-        <ErrorBoundary catchErrors={Config.catchErrors}>
-          <AppNavigator
-            linking={linking}
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
-        </ErrorBoundary>
-      </ThemeProvider>
+      <SheetProvider>
+        <ThemeProvider>
+          <ErrorBoundary catchErrors={Config.catchErrors}>
+            <AppNavigator
+              linking={linking}
+              initialState={initialNavigationState}
+              onStateChange={onNavigationStateChange}
+            />
+          </ErrorBoundary>
+        </ThemeProvider>
+      </SheetProvider>
     </SafeAreaProvider>
   )
 }
