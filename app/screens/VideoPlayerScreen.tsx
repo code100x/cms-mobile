@@ -35,7 +35,7 @@ export const VideoPlayerScreen: FC<VideoPlayerScreenProps> = observer(function V
     <Screen style={$root} contentContainerStyle={$styles.flex1}>
       <Header
         onLeftPress={goBack}
-        // leftText="Back" // TODO: Check why is it not visible with the icon and the component has onPress handler already
+        leftText="Back"
         backgroundColor={colors.background.primary}
         leftIcon="caretLeft"
         leftIconColor={colors.content.secondary}
