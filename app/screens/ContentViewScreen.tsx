@@ -33,7 +33,7 @@ export const ContentViewScreen: FC<ContentViewScreenProps> = observer(function C
     <Screen style={$root} contentContainerStyle={$styles.flex1}>
       <Header
         onLeftPress={navigation.goBack}
-        // leftText="Back" // TODO: Check why is it not visible with the icon and the component has onPress handler already
+        leftText="Back"
         backgroundColor={colors.background.primary}
         leftIcon="caretLeft"
         leftIconColor={colors.content.secondary}
