@@ -1,104 +1,26 @@
-import React, { FC, useEffect, useMemo, useRef, useState } from "react"
+import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
-import { TextInput, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import { TextStyle, View, ViewStyle } from "react-native"
 import { AuthStackScreenProps, goBack } from "app/navigators"
-import {
-  Button,
-  Header,
-  Icon,
-  Screen,
-  Text,
-  TextField,
-  TextFieldAccessoryProps,
-} from "app/components"
+import { Button, Header, Screen, Text, TextField } from "app/components"
 import { colors, spacing, typography } from "app/theme"
-import { useStores } from "app/models"
-import { HIT_SLOP_5 } from "app/constants"
+import { useLogin } from "app/hooks"
 
 interface LoginScreenProps extends AuthStackScreenProps<"Login"> {}
 
 export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen() {
-  const { userStore } = useStores()
-  const { login, setEmail, setPassword, email, password, validationEmail, validationPassword } =
-    userStore
-
-  const [error, setError] = useState({
-    email: "",
-    password: "",
-  })
-
-  const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
-
-  const authPasswordInput = useRef<TextInput>(null)
-
-  const focusPasswordInput = () => authPasswordInput.current?.focus()
-
-  const handleEmailChange = (text: string) => {
-    setEmail(text)
-    if (error.email) {
-      setError((prevError) => ({ ...prevError, email: "" }))
-    }
-  }
-
-  const handlePasswordChange = (text: string) => {
-    setPassword(text)
-    if (error.password) {
-      setError((prevError) => ({ ...prevError, password: "" }))
-    }
-  }
-
-  // TODO: Can use Zod instead, need confirmation
-  const validateLoginData = () => {
-    const emailError = validationEmail
-    const passwordError = validationPassword
-    const newErrors = { email: emailError, password: passwordError }
-
-    setError({ ...error, ...newErrors })
-
-    return !Object.values(newErrors).some((error) => error)
-  }
-
-  const handleLogin = async () => {
-    const isLoginDataValid = validateLoginData()
-
-    // if the data ins't valid, return
-    if (!isLoginDataValid) return
-
-    await login()
-  }
-
-  const PasswordRightAccessory: React.ComponentType<TextFieldAccessoryProps> = useMemo(
-    () =>
-      function PasswordRightAccessory(props: TextFieldAccessoryProps) {
-        return (
-          <TouchableOpacity
-            activeOpacity={0.8}
-            hitSlop={HIT_SLOP_5}
-            onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
-            style={props.style}
-          >
-            <Icon
-              icon={isAuthPasswordHidden ? "view" : "hidden"}
-              color={colors.border.default}
-              size={20}
-            />
-          </TouchableOpacity>
-        )
-      },
-    [isAuthPasswordHidden],
-  )
-
-  useEffect(() => {
-    if (__DEV__) {
-      setEmail("testuser@example.com")
-      setPassword("123456")
-    }
-    // TODO: This can be done in the login function [Good UX] maintenance
-    // Here is where you could fetch credentials from keychain or storage
-    // and pre-fill the form fields.
-    // setEmail("test@gmail.red")
-    // setPassword("123456")
-  }, [])
+  const {
+    authPasswordInput,
+    email,
+    error,
+    focusPasswordInput,
+    handleEmailChange,
+    handleLogin,
+    handlePasswordChange,
+    isAuthPasswordHidden,
+    password,
+    PasswordRightAccessory,
+  } = useLogin()
 
   return (
     <Screen style={$root} preset="auto">
