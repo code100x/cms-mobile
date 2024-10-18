@@ -26,6 +26,11 @@ export const UserStoreModel = types
       if (store.password.length === 0) return "can't be blank"
       return ""
     },
+    get validationUsername() {
+      // TODO: check from backend for unique username
+      if (store.username.length === 0) return "can't be blank"
+      return ""
+    },
   }))
   .actions((store) => ({
     setAuthToken(value?: string) {
@@ -82,11 +87,47 @@ export const UserStoreModel = types
       }
     }),
 
+    signup: flow(function* () {
+      try {
+        const { email, password, username } = store
+
+        if (__DEV__) {
+          store.authToken = "token"
+          saveString("token", "token")
+          return
+        }
+
+        api.apisauce.addRequestTransform((request: Parameters<RequestTransform>[0]) => {
+          if (request.url?.includes("/signup")) {
+            request.headers = request.headers ?? {}
+            // # TODO: Setup react-native-config
+            request.headers["Auth-Key"] = process.env.LOGIN_AUTH_SECRET || "abcd"
+          }
+        })
+
+        const payload = { email, password, username }
+
+        const response = yield api.post("/signup", payload)
+
+        if (response.ok) {
+          const token = response.data?.data?.token
+          // TODO: Do we need a check here for the token?
+          store.authToken = token
+          saveString("token", token)
+        } else {
+          throw new Error(response.data)
+        }
+      } catch (err) {
+        console.error("Failed to login", err)
+      }
+    }),
+
     logout() {
       remove("token")
       store.authToken = undefined
       store.email = ""
       store.password = ""
+      store.username = ""
     },
   }))
   .actions((self) => ({
