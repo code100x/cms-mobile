@@ -10,7 +10,7 @@ import { ContentType, RouteName } from "app/constants"
 
 import { AutoImage } from "./AutoImage"
 import { Button } from "./Button"
-import { Progress } from "./Progress"
+import CircularProgress from "./Progress"
 
 export interface CourseCardProps {
   /** an optional style override useful for padding & margin. */
@@ -41,10 +41,9 @@ export const CourseCard = observer(function CourseCard(props: CourseCardProps) {
         style={$image}
       />
       <View style={$subContainer}>
-        <View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <Text style={$title} text="Cohort 3.0 | Web Dev" />
-          {/* TODO: Change this to a circular progress */}
-          <Progress progress={50} />
+          <CircularProgress progress={50} size={50} />
         </View>
         <Button onPress={handleViewContentPress} text="View Content" />
         <TouchableOpacity activeOpacity={0.8} onPress={handleJoinDiscordPress} style={$footer}>
