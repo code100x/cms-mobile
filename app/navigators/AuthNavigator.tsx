@@ -9,6 +9,7 @@ import * as Screens from "app/screens"
 export type AuthStackParamList = {
   Login: undefined
   Welcome: undefined
+  Signup: undefined
 }
 
 export type AuthStackScreenProps<T extends keyof AuthStackParamList> = NativeStackScreenProps<
@@ -26,6 +27,7 @@ const AuthNavigator = observer(() => {
     >
       <AuthStack.Screen name={RouteName.Welcome} component={Screens.WelcomeScreen} />
       <AuthStack.Screen name={RouteName.Login} component={Screens.LoginScreen} />
+      <AuthStack.Screen name={RouteName.Signup} component={Screens.SignupScreen} />
     </AuthStack.Navigator>
   )
 })

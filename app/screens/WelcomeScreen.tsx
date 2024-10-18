@@ -17,6 +17,10 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
     navigation.navigate(RouteName.Login)
   }
 
+  const handleSignup = () => {
+    navigation.navigate(RouteName.Signup)
+  }
+
   return (
     <Screen preset="auto" safeAreaEdges={["top"]} contentContainerStyle={$root}>
       <AutoImage
@@ -41,7 +45,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
           style={$subHeading}
         />
         <Button onPress={handleLogin} text="Login" />
-        <Button text="Sign Up Now" preset="outline" />
+        <Button onPress={handleSignup} text="Sign Up Now" preset="outline" />
       </View>
     </Screen>
   )
